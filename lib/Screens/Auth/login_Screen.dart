@@ -65,7 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
           Image.asset(
             'images/logo.png',
             fit: BoxFit.cover,
-            height: 300,
+            height: 200,
             width: 200,
           ),
           TextFiled(
@@ -105,9 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextButton(
                         onPressed: () {
                           setState(() {
-
                             _count == 0 ? _count++ : _count--;
-
                           });
                         },
                         child: TextContainer(
@@ -124,11 +122,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextButton(
                         onPressed: () {
                           setState(() {
-
                             _count == 1 || _count == 0
                                 ? _count = 2
                                 : _count = 0;
-
                           });
                         },
                         child: TextContainer(
@@ -190,7 +186,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (value != null) {
                   setState(() {
                     _selectedCitys = value;
-
                   });
                 }
               },
@@ -207,6 +202,25 @@ class _SignupScreenState extends State<SignupScreen> {
             title: 'Sign up',
             onPressed: () {},
           ),
+          const SizedBox(
+            height: 32,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Already have an account?',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Sign in',
+                  style: TextStyle(color: Color(0xff007DFD), fontSize: 16),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
