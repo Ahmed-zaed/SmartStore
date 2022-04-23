@@ -15,6 +15,7 @@ class TextContainer extends StatelessWidget {
     return Stack(
       children: [
         Container(
+
           width: 50,
           height: 21,
           child:  Align(
@@ -28,6 +29,7 @@ class TextContainer extends StatelessWidget {
             ),
           ),
           decoration: BoxDecoration(
+
             borderRadius: BorderRadius.circular(2),
             color: color,
           ),

@@ -20,6 +20,8 @@ String? errorText_name;
 String? errorText_phone;
 String? errorText_Password;
 int _count = 0;
+int errorGender = 0;
+int errorSelectedCety = 0;
 List<City> _citys = <City>[
   City(id: 1, name: 'Gaza'),
   City(id: 2, name: 'Rafah'),
@@ -37,7 +39,6 @@ String? _selectedCitys;
 class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _nameEditingController = TextEditingController();
     _passwordEditingController = TextEditingController();
@@ -46,7 +47,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _nameEditingController.dispose();
     _phoneEditingController.dispose();
     _passwordEditingController.dispose();
@@ -76,6 +76,8 @@ class _SignupScreenState extends State<SignupScreen> {
               controller: _nameEditingController,
               obscureText: false),
           TextFiled(
+              helperText: '567390091',
+              maxLingth: 9,
               textPrefix: '+972-',
               textType: TextInputType.phone,
               errorText: errorText_phone,
@@ -144,9 +146,18 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             decoration: BoxDecoration(
-              border: Border.all(width: 1, color: const Color(0xffC1C1C1)),
+              border: Border.all(width: 1, color: Color(0xffC1C1C1)),
               borderRadius: BorderRadius.circular(8),
             ),
+          ),
+          Padding(
+            child: Visibility(
+                visible: errorGender == 1 ? true : false,
+                child: const Text(
+                  'The gender field is empty',
+                  style: TextStyle(color: Colors.red),
+                )),
+            padding: const EdgeInsets.symmetric(horizontal: 9),
           ),
           const SizedBox(
             height: 7,
@@ -195,12 +206,23 @@ class _SignupScreenState extends State<SignupScreen> {
               border: Border.all(color: const Color(0xffC1C1C1), width: 1),
             ),
           ),
+          Padding(
+            child: Visibility(
+                visible: errorSelectedCety != 0 ? true : false,
+                child: const Text(
+                  'The gender field is empty',
+                  style: TextStyle(color: Colors.red),
+                )),
+            padding: const EdgeInsets.symmetric(horizontal: 9),
+          ),
           const SizedBox(
             height: 30,
           ),
           Button(
             title: 'Sign up',
-            onPressed: () {},
+            onPressed: () {
+              signIn();
+            },
           ),
           const SizedBox(
             height: 32,
@@ -224,5 +246,49 @@ class _SignupScreenState extends State<SignupScreen> {
         ],
       ),
     );
+  }
+
+  void signIn() {
+    if (checkTextFiledEmpty()) {
+      Navigator.pushNamed(context, '/Login_Screen');
+    }
+  }
+
+  bool checkTextFiledEmpty() {
+    if (_nameEditingController.text.isNotEmpty &&
+        _phoneEditingController.text.isNotEmpty &&
+        _passwordEditingController.text.isNotEmpty &&
+        _phoneEditingController.text.length == 9 &&
+        _count != 0 &&
+        _selectedCitys != null) {
+      errorTextFiled();
+      return true;
+    } else {
+      errorTextFiled();
+      return false;
+    }
+  }
+
+  void errorTextFiled() {
+    setState(() {
+      errorText_name =
+          _nameEditingController.text.isEmpty ? 'Name field is empty' : null;
+      // errorText_phone = _phoneEditingController.text.isEmpty|| _phoneEditingController.text.length<9
+      //     ? ' Phone field is empty '
+      //     : null;
+      if (_phoneEditingController.text.isEmpty) {
+        errorText_phone = 'Phone field is empty';
+      } else if (_phoneEditingController.text.length < 9) {
+        errorText_phone = 'The number of the number is not equal to 9';
+      } else {
+        errorText_phone = null;
+      }
+      errorText_Password = _passwordEditingController.text.isEmpty
+          ? 'Password field is empty'
+          : null;
+
+      errorGender = _count == 0 ? 1 : 0;
+      errorSelectedCety = _selectedCitys == null ? 1 : 0;
+    });
   }
 }

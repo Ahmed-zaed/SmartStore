@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:untitled2/Screens/Auth/login_Screen.dart';
+import 'package:untitled2/Screens/Auth/signin_Screen.dart';
 import 'package:untitled2/Screens/StartScreen/open_screen.dart';
 import 'package:untitled2/Screens/StartScreen/splashe_screen.dart';
 
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
         '/Splash_Screen': (context) => const SplashScreen(),
         '/Open_Screen': (context) => const OpenScreen(),
         '/Signup_Screen': (context) => const SignupScreen(),
+        '/Login_Screen':(context)=>const LoginScreen(),
+
       },
     );
   }
