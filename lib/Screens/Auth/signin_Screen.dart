@@ -18,6 +18,7 @@ String? errorTextPassword;
 class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     _phoneEditingController = TextEditingController();
     _passwordEditingController = TextEditingController();
@@ -25,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    // TODO: implement dispose
     _phoneEditingController.dispose();
     _passwordEditingController.dispose();
     super.dispose();
