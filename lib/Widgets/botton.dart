@@ -10,7 +10,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(title),
+      child: Text(title,style: TextStyle(fontSize: 16),),
       style: ElevatedButton.styleFrom(
         primary: const Color(0xff007DFD),
         minimumSize: const Size(double.infinity, 50),

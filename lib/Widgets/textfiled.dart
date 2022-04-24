@@ -39,6 +39,7 @@ class TextFiled extends StatelessWidget {
             suffixIcon: suffix,
             labelText: hint,
             prefixText: textPrefix,
+            prefixStyle: const TextStyle(fontSize: 15),
             helperText: helperText,
             hintStyle:
                 const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),

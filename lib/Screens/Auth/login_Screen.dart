@@ -237,7 +237,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/Login_Screen');
+                },
                 child: const Text(
                   'Sign in',
                   style: TextStyle(color: Color(0xff007DFD), fontSize: 16),

@@ -64,8 +64,20 @@ class _LoginScreenState extends State<LoginScreen> {
               suffix: const Icon(Icons.visibility_off),
               controller: _passwordEditingController,
               obscureText: true),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/ForgetPassword_Screen');
+              },
+              child: const Text(
+                'Forgot your password',
+                style: TextStyle(color: Colors.black45),
+              ),
+            ),
+          ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Button(
             title: 'Sign up',
