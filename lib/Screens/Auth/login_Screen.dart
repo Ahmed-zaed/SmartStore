@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled2/Screens/Auth/validationcode_screen.dart';
 
 import '../../Models/cety_model.dart';
 import '../../Widgets/botton.dart';
@@ -16,9 +16,9 @@ class SignupScreen extends StatefulWidget {
 late TextEditingController _nameEditingController;
 late TextEditingController _phoneEditingController;
 late TextEditingController _passwordEditingController;
-String? errorText_name;
-String? errorText_phone;
-String? errorText_Password;
+String? errorTextName;
+String? errorTextPhone;
+String? errorTextPassword;
 int _count = 0;
 int errorGender = 0;
 int errorSelectedCety = 0;
@@ -72,7 +72,7 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
           TextFiled(
               textType: TextInputType.text,
-              errorText: errorText_name,
+              errorText: errorTextName,
               hint: 'Name',
               suffix: const Icon(Icons.person),
               controller: _nameEditingController,
@@ -82,14 +82,14 @@ class _SignupScreenState extends State<SignupScreen> {
               maxLingth: 9,
               textPrefix: '+972-',
               textType: TextInputType.phone,
-              errorText: errorText_phone,
+              errorText: errorTextPhone,
               hint: 'Phone Number',
               suffix: const Icon(Icons.phone),
               controller: _phoneEditingController,
               obscureText: false),
           TextFiled(
               textType: TextInputType.text,
-              errorText: errorText_Password,
+              errorText: errorTextPassword,
               hint: 'Password',
               suffix: const Icon(
                 Icons.visibility_off,
@@ -148,7 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Color(0xffC1C1C1)),
+              border: Border.all(width: 1, color: const Color(0xffC1C1C1)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -254,7 +254,14 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signIn() {
     if (checkTextFiledEmpty()) {
-      Navigator.pushNamed(context, '/Login_Screen');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ValidationCode(
+            phone: _phoneEditingController.text.toString(),
+          ),
+        ),
+      );
     }
   }
 
@@ -275,19 +282,19 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void errorTextFiled() {
     setState(() {
-      errorText_name =
+      errorTextName =
           _nameEditingController.text.isEmpty ? 'Name field is empty' : null;
       // errorText_phone = _phoneEditingController.text.isEmpty|| _phoneEditingController.text.length<9
       //     ? ' Phone field is empty '
       //     : null;
       if (_phoneEditingController.text.isEmpty) {
-        errorText_phone = 'Phone field is empty';
+        errorTextPhone = 'Phone field is empty';
       } else if (_phoneEditingController.text.length < 9) {
-        errorText_phone = 'The number of the number is not equal to 9';
+        errorTextPhone = 'The number of the number is not equal to 9';
       } else {
-        errorText_phone = null;
+        errorTextPhone = null;
       }
-      errorText_Password = _passwordEditingController.text.isEmpty
+      errorTextPassword = _passwordEditingController.text.isEmpty
           ? 'Password field is empty'
           : null;
 

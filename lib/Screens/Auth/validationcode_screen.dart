@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled2/Mixin/mixinsnackbare.dart';
 import 'package:untitled2/Widgets/botton.dart';
 
 import '../../Widgets/textfiledcode.dart';
@@ -17,8 +18,14 @@ late TextEditingController _numberOneEditingController;
 late TextEditingController _numberTowEditingController;
 late TextEditingController _numberThreeEditingController;
 late TextEditingController _numberForeEditingController;
+late FocusNode _numberOneFocusNode;
+late FocusNode _numberTowFocusNode;
+late FocusNode _numberThreeFocusNode;
+late FocusNode _numberForeFocusNode;
 
-class _ValidationCodeState extends State<ValidationCode> {
+String _code = '';
+
+class _ValidationCodeState extends State<ValidationCode> with Helper {
   @override
   void initState() {
     // TODO: implement initState
@@ -27,6 +34,10 @@ class _ValidationCodeState extends State<ValidationCode> {
     _numberTowEditingController = TextEditingController();
     _numberThreeEditingController = TextEditingController();
     _numberForeEditingController = TextEditingController();
+    _numberOneFocusNode = FocusNode();
+    _numberThreeFocusNode = FocusNode();
+    _numberTowFocusNode = FocusNode();
+    _numberForeFocusNode = FocusNode();
   }
 
   @override
@@ -36,6 +47,11 @@ class _ValidationCodeState extends State<ValidationCode> {
     _numberTowEditingController.dispose();
     _numberThreeEditingController.dispose();
     _numberForeEditingController.dispose();
+
+    _numberOneFocusNode.dispose();
+    _numberTowFocusNode.dispose();
+    _numberThreeFocusNode.dispose();
+    _numberForeFocusNode.dispose();
 
     super.dispose();
   }
@@ -72,19 +88,51 @@ class _ValidationCodeState extends State<ValidationCode> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 28,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFiledCode(controller: _numberOneEditingController),
-                TextFiledCode(controller: _numberTowEditingController),
-                TextFiledCode(controller: _numberThreeEditingController),
-                TextFiledCode(controller: _numberForeEditingController),
+                TextFiledCode(
+                    onChange: (String value) {
+                      if (value.isNotEmpty) {
+                        _numberTowFocusNode.requestFocus();
+                      }
+                    },
+                    controller: _numberOneEditingController,
+                    focusNode: _numberOneFocusNode),
+                TextFiledCode(
+                    controller: _numberTowEditingController,
+                    focusNode: _numberTowFocusNode,
+                    onChange: (String value) {
+                      if (value.isNotEmpty) {
+                        _numberThreeFocusNode.requestFocus();
+                      } else {
+                        _numberOneFocusNode.requestFocus();
+                      }
+                    }),
+                TextFiledCode(
+                    controller: _numberThreeEditingController,
+                    focusNode: _numberThreeFocusNode,
+                    onChange: (String value) {
+                      if (value.isNotEmpty) {
+                        _numberForeFocusNode.requestFocus();
+                      } else {
+                        _numberTowFocusNode.requestFocus();
+                      }
+                    }),
+                TextFiledCode(
+                    controller: _numberForeEditingController,
+                    focusNode: _numberForeFocusNode,
+                    onChange: (String value) {
+                      if (value.isEmpty) {
+                        _numberThreeFocusNode.requestFocus();
+                      }
+                    }),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 47,
             ),
             TextButton(
@@ -100,10 +148,38 @@ class _ValidationCodeState extends State<ValidationCode> {
             const SizedBox(
               height: 57,
             ),
-            Button(title: 'Submit', onPressed: () {}),
+            Button(
+                title: 'Submit',
+                onPressed: () {
+                  checkCode();
+                }),
           ],
         ),
       ),
     );
+  }
+
+  bool checkEmptyFiled() {
+    if (_numberOneEditingController.text.isNotEmpty &&
+        _numberTowEditingController.text.isNotEmpty &&
+        _numberThreeEditingController.text.isNotEmpty &&
+        _numberForeEditingController.text.isNotEmpty) {
+      return true;
+    } else {
+      showSnackBare(context,
+          message: 'Something went wrong with the code fields',
+          visibility: true);
+      return false;
+    }
+  }
+
+  void checkCode() {
+    String numberOne = _numberOneEditingController.text.toString();
+    String numberTow = _numberTowEditingController.text.toString();
+    String numberThree = _numberThreeEditingController.text.toString();
+    String numberFore = _numberForeEditingController.text.toString();
+    if (checkEmptyFiled()) {
+      _code = numberOne + numberTow + numberThree + numberFore;
+    }
   }
 }
